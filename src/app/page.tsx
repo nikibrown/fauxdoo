@@ -1,105 +1,40 @@
-import Link from "next/link";
-import WebflowLogo from "./components/WebflowLogo";
-import DocCard from "./components/DocCard";
-import BindingsStatus from "./components/BindingsStatus";
-
-const FRAMEWORK = "Next.js";
-
-const DOC_LINKS = [
-  {
-    title: "Webflow Cloud overview",
-    description: "What Webflow Cloud is and what you can build on it.",
-    href: "https://developers.webflow.com/webflow-cloud",
-  },
-  {
-    title: "Storing data",
-    description: "Add SQLite, Key Value, and Object Storage bindings.",
-    href: "https://developers.webflow.com/webflow-cloud/storing-data/overview",
-  },
-  {
-    title: `${FRAMEWORK} on Webflow Cloud`,
-    description: "Build and deploy your first Webflow Cloud app.",
-    href: "https://developers.webflow.com/webflow-cloud/getting-started",
-  },
-  {
-    title: "Environments & deployments",
-    description: "Manage previews, production, and deployment history.",
-    href: "https://developers.webflow.com/webflow-cloud/environments",
-  },
-];
+/* eslint-disable @next/next/no-img-element -- small static SVGs; no optimization needed */
+import Calculator from "./components/Calculator";
+import { withBasePath } from "@/lib/paths";
 
 export default function Home() {
   return (
-    <div className="wf-page">
-      <div className="wf-glow" aria-hidden />
-      <header className="wf-header">
-        <div className="wf-brand">
-          <WebflowLogo />
-          <span className="wf-brand-text">Webflow Cloud</span>
+    <>
+      <header>
+        <div className="container">
+          <nav>
+            <img src={withBasePath("img/fauxdoo-logo.svg")} alt="Fauxdoo" className="logo" />
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </nav>
         </div>
-        <nav className="wf-nav">
-          <Link href="https://developers.webflow.com/webflow-cloud" target="_blank">
-            Docs
-          </Link>
-          <Link
-            href="https://github.com/Webflow-Examples"
-            target="_blank"
-            className="wf-nav-ghost"
-          >
-            GitHub
-          </Link>
-        </nav>
       </header>
-
-      <main className="wf-main">
-        <section className="wf-hero">
-          <p className="wf-eyebrow">Hello, world · {FRAMEWORK} + Bindings</p>
-          <h1 className="wf-title">
-            Your <span className="wf-gradient">{FRAMEWORK}</span> app,
-            <br />
-            wired to the edge.
+      <main>
+        <section className="container">
+          <h1 className="text-center">
+            <span className="highlight">Cut costs</span> with fauxdoo
           </h1>
-          <p className="wf-subtitle">
-            D1 · R2 · KV provisioned automatically at deploy time. Inspect the
-            live binding health below.
-          </p>
-          <div className="wf-cta">
-            <a
-              className="wf-btn wf-btn-primary"
-              href="https://developers.webflow.com/webflow-cloud/storing-data/overview"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Read the bindings guide
-            </a>
-            <a
-              className="wf-btn wf-btn-ghost"
-              href="https://github.com/Webflow-Examples/hello-world-next-app-bindings"
-              target="_blank"
-              rel="noreferrer"
-            >
-              View on GitHub
-            </a>
-          </div>
-        </section>
+          <h2 className="text-center">
+            Cost savings based on average price per user for each app.
+          </h2>
 
-        <BindingsStatus />
-
-        <section className="wf-cards" aria-label="Documentation">
-          {DOC_LINKS.map((l) => (
-            <DocCard key={l.href} {...l} />
-          ))}
+          <Calculator />
         </section>
       </main>
+      <footer>
+        <div className="container">
 
-      <footer className="wf-footer">
-        <span>
-          Built with {FRAMEWORK} · Deployed on{" "}
-          <a href="https://webflow.com/cloud" target="_blank" rel="noreferrer">
-            Webflow Cloud
-          </a>
-        </span>
+          <p className="text-center">Copyright 2026</p>
+        </div>
       </footer>
-    </div>
+    </>
   );
 }

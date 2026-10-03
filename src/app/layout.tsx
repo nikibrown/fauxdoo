@@ -1,21 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "Hello, world · Webflow Cloud (Next.js + Bindings)",
+  title: "Cut costs with Fauxdoo",
   description:
-    "A Next.js starter for Webflow Cloud with Cloudflare bindings (D1, R2, KV) wired in.",
+    "See how much you could save by replacing your apps with the Fauxdoo Suite. Fictional product for demonstration only.",
 };
 
 export default function RootLayout({
@@ -24,10 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-    >
+    <html lang="en">
       <body>{children}</body>
     </html>
   );
