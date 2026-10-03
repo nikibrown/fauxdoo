@@ -1,0 +1,25 @@
+{
+  "main": ".open-next/worker.js",
+  "name": "fauxdoo",
+  "compatibility_date": "2025-04-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "db",
+      "database_id": "0",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "kv_namespaces": [
+    { "binding": "SESSIONS", "id": "local" },
+    { "binding": "FLAGS", "id": "local-flags" }
+  ],
+  "r2_buckets": [
+    { "binding": "MEDIA", "bucket_name": "media" }
+  ]
+}
