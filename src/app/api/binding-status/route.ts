@@ -72,7 +72,7 @@ async function checkR2(r2: R2Bucket | undefined): Promise<ServiceStatus> {
 
 export async function GET() {
   try {
-    const ctx = await getCloudflareContext();
+    const ctx = await getCloudflareContext({ async: true });
     const env = ctx?.env as unknown as Record<string, unknown> | undefined;
 
     // Debug: list available bindings

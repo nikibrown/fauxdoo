@@ -50,7 +50,7 @@ package.json
 
 ```bash
 npm install
-npm run dev             # Next dev server — bindings stubs / noop in dev
+npm run dev             # Next dev server — API routes use local wrangler bindings (run `npm run db:setup` first)
 npm run dev:cf          # OpenNext + wrangler dev — full bindings simulation
 ```
 

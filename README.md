@@ -28,7 +28,7 @@ At deploy time, Webflow Cloud provisions the configured services and injects the
 ```bash
 npm install
 
-# Run locally (no bindings)
+# Run locally (Next dev server; API routes use local bindings from .wrangler/state — run `npm run db:setup` first)
 npm run dev
 
 # Run locally against real bindings (via wrangler)

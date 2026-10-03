@@ -27,7 +27,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { env } = getCloudflareContext();
+    const { env } = await getCloudflareContext({ async: true });
     const pricing = await loadPricing(env.DB);
 
     const result = validateLead(body, new Set(pricing.tools.map((tool) => tool.slug)));

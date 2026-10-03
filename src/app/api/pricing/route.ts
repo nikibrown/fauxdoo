@@ -11,7 +11,7 @@ import { loadPricing } from "@/lib/pricing";
  */
 export async function GET() {
   try {
-    const { env } = getCloudflareContext();
+    const { env } = await getCloudflareContext({ async: true });
     const pricing = await loadPricing(env.DB);
     return NextResponse.json(pricing);
   } catch (e) {
