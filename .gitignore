@@ -49,3 +49,6 @@ next-env.d.ts
 CLAUDE.md
 .claude/
 docs/
+
+# Lead exports downloaded from /api/admin/leads (contain email addresses)
+*.csv
