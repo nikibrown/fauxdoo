@@ -46,7 +46,6 @@ export default function Calculator() {
   const [selected, setSelected] = useState<string[]>([]);
   const [usersText, setUsersText] = useState("10");
   const [email, setEmail] = useState("");
-  const [consent, setConsent] = useState(false);
   const [website, setWebsite] = useState("");
   const [submit, setSubmit] = useState<SubmitState>({ status: "idle" });
 
@@ -102,7 +101,8 @@ export default function Calculator() {
       const res = await fetch(withBasePath("api/leads"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, users, toolSlugs: selected, consent, website }),
+        // Submitting is the consent: the notice under the button says so.
+        body: JSON.stringify({ email, users, toolSlugs: selected, consent: true, website }),
       });
       if (res.status === 201) {
         setSubmit({ status: "success" });
@@ -262,16 +262,9 @@ export default function Calculator() {
           <button className="btn" type="submit" disabled={submit.status === "submitting"}>
             {submit.status === "submitting" ? "Sending…" : "Try Fauxdoo for free"}
           </button>
-          <label className="consent-label">
-            <input
-              type="checkbox"
-              name="consent"
-              required
-              checked={consent}
-              onChange={(e) => setConsent(e.target.checked)}
-            />{" "}
-            Email me about my savings and Fauxdoo. Unsubscribe anytime.
-          </label>
+          <p className="consent-label">
+            By submitting, you agree to get emails about your savings and Fauxdoo. Unsubscribe anytime.
+          </p>
           {/* Honeypot: hidden from people; bots that fill it are ignored by the server. */}
           <div className="form-honeypot" aria-hidden="true">
             <label htmlFor="website-input">Website</label>
