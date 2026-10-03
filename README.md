@@ -2,7 +2,7 @@
 
 A small full-stack app on [Webflow Cloud](https://webflow.com/cloud): a "cut costs" calculator for **Fauxdoo**, a fictional all-in-one software suite. Visitors pick the apps they pay for, see how much they'd save by switching, and can leave their email so marketing can follow up.
 
-**Live:** https://fauxdoo.webflow.io/savings
+**Live:** https://fauxdoo-software.webflow.io/savings-calculator, mounted on the Fauxdoo Webflow site (https://fauxdoo-software.webflow.io/), which links to it.
 
 > Fauxdoo and every tool name and price here (Taskana, Fastbooks, Buyify, Slick, Siteflo, Dealforce) are made up. This is a demo built for a video about when and how to use Webflow Cloud.
 
@@ -97,7 +97,7 @@ npx wrangler d1 execute DB --local --command "UPDATE tools SET per_user_cents = 
 
 ## API
 
-All paths are relative to the app's mount path (e.g. `/savings/api/pricing` on the live site).
+All paths are relative to the app's mount path (e.g. `/savings-calculator/api/pricing` on the live site).
 
 ### Public
 
@@ -116,7 +116,7 @@ All paths are relative to the app's mount path (e.g. `/savings/api/pricing` on t
 **`POST /api/leads`**: saves a lead and returns the savings the server calculated.
 
 ```bash
-curl -X POST https://fauxdoo.webflow.io/savings/api/leads \
+curl -X POST https://fauxdoo-software.webflow.io/savings-calculator/api/leads \
   -H "Content-Type: application/json" \
   -d '{"email":"you@example.com","users":5,"toolSlugs":["tasks","chat","crm"],"consent":true,"website":""}'
 # 201 {"ok":true,"annualSavingsCents":...}
@@ -138,18 +138,18 @@ Download the leads CSV without putting the token in your shell history:
 
 ```bash
 read -s "T?Admin token: "
-curl -fOJ -H "Authorization: Bearer $T" "https://fauxdoo.webflow.io/savings/api/admin/leads?format=csv&consentOnly=1"
+curl -fOJ -H "Authorization: Bearer $T" "https://fauxdoo-software.webflow.io/savings-calculator/api/admin/leads?format=csv&consentOnly=1"
 unset T
 ```
 
 ## Deploy to Webflow Cloud
 
 1. Push this repo to GitHub.
-2. In Webflow, open the [Webflow Cloud deploy wizard](https://webflow.com/dashboard/cloud/deploy), connect GitHub, pick the repo and the `main` branch, choose **Existing site**, and set a mount path (this app uses `/savings`).
+2. In Webflow, open the [Webflow Cloud deploy wizard](https://webflow.com/dashboard/cloud/deploy), connect GitHub, pick the repo and the `main` branch, choose **Existing site**, and set a mount path (this app uses `/savings-calculator`).
 3. Webflow Cloud creates the database from `wrangler.json` and applies the migrations in `drizzle/` automatically on deploy.
 4. In the environment's **Environment variables** tab, add:
    - `ADMIN_TOKEN`: a long random value, marked **Secret**.
-   - `NEXT_PUBLIC_BASE_PATH` (optional): the mount path, e.g. `/savings`. If you set it, keep it in sync with the mount path.
+   - `NEXT_PUBLIC_BASE_PATH` (optional): the mount path, e.g. `/savings-calculator`. If you set it, keep it in sync with the mount path.
 5. Push to `main` to redeploy. Environment variable changes only take effect on the next deploy.
 
 **Editing live data:** the environment's **Storage** tab lets you view, edit, and delete rows. Change a value in the `tools` table (in cents) and refresh the calculator; no redeploy needed.
