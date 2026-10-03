@@ -217,8 +217,9 @@ export default function Calculator() {
               {hasSavings ? (
                 <>
                   <h3>
-                    Your savings <span className="highlight">{formatUsd(quote.annualSavingsCents)} / year</span>
+                    Your savings:
                   </h3>
+                  <h3><span className="highlight">{formatUsd(quote.annualSavingsCents)} / year</span></h3>
                   <p>For a fully-integrated software.</p>
                 </>
               ) : (
