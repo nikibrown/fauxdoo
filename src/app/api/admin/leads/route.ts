@@ -1,6 +1,6 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { NextResponse } from "next/server";
-import { checkAdminAuth } from "@/lib/admin-auth";
+import { checkAdminAuth, getAdminToken } from "@/lib/admin-auth";
 import { toCsv } from "@/lib/csv";
 
 /**
@@ -23,7 +23,7 @@ interface LeadRow {
 export async function GET(request: Request) {
   try {
     const { env } = await getCloudflareContext({ async: true });
-    const authError = await checkAdminAuth(request, env.ADMIN_TOKEN);
+    const authError = await checkAdminAuth(request, getAdminToken(env));
     if (authError) return authError;
 
     const params = new URL(request.url).searchParams;

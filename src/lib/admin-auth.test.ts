@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { bearerToken, checkAdminAuth, tokensMatch } from "./admin-auth.ts";
+import { bearerToken, checkAdminAuth, getAdminToken, tokensMatch } from "./admin-auth.ts";
 
 const request = (authorization?: string) =>
   new Request("http://localhost/api/admin/pricing", {
@@ -31,4 +31,19 @@ test("rejects missing or wrong tokens and accepts the right one", async () => {
   assert.equal((await checkAdminAuth(request(), "secret"))?.status, 401);
   assert.equal((await checkAdminAuth(request("Bearer wrong"), "secret"))?.status, 401);
   assert.equal(await checkAdminAuth(request("Bearer secret"), "secret"), null);
+});
+
+test("reads ADMIN_TOKEN from the Cloudflare env, falling back to process.env", () => {
+  const previous = process.env.ADMIN_TOKEN;
+  try {
+    delete process.env.ADMIN_TOKEN;
+    assert.equal(getAdminToken({ ADMIN_TOKEN: "from-env" }), "from-env");
+    assert.equal(getAdminToken({}), undefined);
+    process.env.ADMIN_TOKEN = "from-process";
+    assert.equal(getAdminToken({}), "from-process");
+    assert.equal(getAdminToken({ ADMIN_TOKEN: "from-env" }), "from-env");
+  } finally {
+    if (previous === undefined) delete process.env.ADMIN_TOKEN;
+    else process.env.ADMIN_TOKEN = previous;
+  }
 });

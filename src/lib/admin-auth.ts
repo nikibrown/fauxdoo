@@ -41,3 +41,11 @@ export async function checkAdminAuth(
   }
   return null;
 }
+
+/**
+ * Webflow Cloud environment variables arrive on the Cloudflare env;
+ * process.env is a fallback in case they're only exposed there.
+ */
+export function getAdminToken(env: { ADMIN_TOKEN?: string }): string | undefined {
+  return env.ADMIN_TOKEN || process.env.ADMIN_TOKEN || undefined;
+}
