@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav class="">
+          <img src="img/fauxdoo-logo.svg" alt="Fauxdoo Logo" class="logo" />
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="container">
+        <h1 class="text-center">
+          <span class="highlight">Cut costs</span> with fauxdoo
+        </h1>
+        <h2 class="text-center">
+          Cost savings based on average price per user for each app.
+        </h2>
+
+        <div class="calculator-container">
+          <div class="calculator-container-inner">
+            <h3>1. Which apps do you use?</h3>
+            <div class="apps-container">
+              <div class="app-option">
+                <input
+                  type="checkbox"
+                  id="app-taskana"
+                  class="app-card-check"
+                  name="apps"
+                  value="taskana"
+                />
+                <label class="app-card" for="app-taskana">
+                  <span class="app-card-logo">
+                    <img src="img/taskana.svg" alt="app-icon" />
+                  </span>
+                  <span class="app-category">Project Management</span>
+                  <!-- <p class="app-name">Taskana</p>
+                <p class="app-price">$20 / month / user</p> -->
+                </label>
+              </div>
+
+              <div class="app-option">
+                <input
+                  type="checkbox"
+                  id="app-fastbooks"
+                  class="app-card-check"
+                  name="apps"
+                  value="fastbooks"
+                />
+                <label class="app-card" for="app-fastbooks">
+                  <span class="app-card-logo">
+                    <img src="img/fastbooks.svg" alt="app-icon" />
+                  </span>
+                  <span class="app-category">Accounting</span>
+                  <!-- <p class="app-name">Fastbooks</p>
+                <p class="app-price">$76 / month</p> -->
+                </label>
+              </div>
+
+              <div class="app-option">
+                <input
+                  type="checkbox"
+                  id="app-buyify"
+                  class="app-card-check"
+                  name="apps"
+                  value="buyify"
+                />
+                <label class="app-card" for="app-buyify">
+                  <span class="app-card-logo">
+                    <img src="img/buyify.svg" alt="app-icon" />
+                  </span>
+                  <span class="app-category">eCommerce</span>
+                  <!-- <p class="app-name">Buyify</p>
+                <p class="app-price">$79 / month</p> -->
+                </label>
+              </div>
+
+              <div class="app-option">
+                <input
+                  type="checkbox"
+                  id="app-slick"
+                  class="app-card-check"
+                  name="apps"
+                  value="slick"
+                />
+                <label class="app-card" for="app-slick">
+                  <span class="app-card-logo">
+                    <img src="img/slick.svg" alt="app-icon" />
+                  </span>
+                  <span class="app-category">Communication</span>
+                  <!-- <p class="app-name">Slick</p>
+                <p class="app-price">$16 / month / user</p> -->
+                </label>
+              </div>
+
+              <div class="app-option">
+                <input
+                  type="checkbox"
+                  id="app-siteflo"
+                  class="app-card-check"
+                  name="apps"
+                  value="siteflo"
+                />
+                <label class="app-card" for="app-siteflo">
+                  <span class="app-card-logo">
+                    <img src="img/siteflo.svg" alt="app-icon" />
+                  </span>
+                  <span class="app-category">Website</span>
+                  <!-- <p class="app-name">Siteflow</p>
+                <p class="app-price">$39 / month</p> -->
+                </label>
+              </div>
+
+              <div class="app-option">
+                <input
+                  type="checkbox"
+                  id="app-dealforce"
+                  class="app-card-check"
+                  name="apps"
+                  value="dealforce"
+                />
+                <label class="app-card" for="app-dealforce">
+                  <span class="app-card-logo">
+                    <img src="img/dealforce.svg" alt="app-icon" />
+                  </span>
+                  <span class="app-category">CRM</span>
+                  <!-- <p class="app-name">Dealforce</p>
+                <p class="app-price">$50 / month</p> -->
+                </label>
+              </div>
+            </div>
+
+            <h3>2. How many users?</h3>
+            <div class="users-container">
+              <input
+                type="number"
+                placeholder="Enter number of users"
+                class="users-input"
+                value="10"
+              />
+            </div>
+          </div>
+          <div class="calculator-totals-container">
+            <div class="calculator-total-card">
+              <h3>Apps to replace</h3>
+
+              <p>for <span class="users-input-value">5</span> users / month</p>
+
+              <ul>
+                <li>
+                  <span class="app-name">Taskana</span>
+                  <span class="app-price">$20 / user</span>
+                </li>
+                <li>
+                  <span class="app-name">Fastbooks</span>
+                  <span class="app-price">$76</span>
+                </li>
+                <li>
+                  <span class="app-name">Buyify</span>
+                  <span class="app-price">$79</span>
+                </li>
+                <li>
+                  <span class="app-name">Slick</span>
+                  <span class="app-price">$8 / user</span>
+                </li>
+                <li>
+                  <span class="app-name">Siteflo</span>
+                  <span class="app-price">$39 / month</span>
+                </li>
+                <li>
+                  <span class="app-name">Dealforce</span>
+                  <span class="app-price">$50 / month</span>
+                </li>
+              </ul>
+
+              <h3>Total</h3>
+              <p>$16,806.00 / year</p>
+
+              <h3>All Odoo Apps</h3>
+              <p>for <span class="users-input-value">5</span> users / month</p>
+
+              <h3>TOTAL</h3>
+              <p>$5,975.99 / year</p>
+
+              <h3>
+                Your savings <span class="highlight">$55,500.00 / year</span>
+              </h3>
+              <p>For a fully-integrated software.</p>
+            </div>
+          </div>
+        </div>
+
+        <form class="sales-container">
+          <h3>Get started with a demo today</h3>
+          <input type="email" name="email" placeholder="Enter your email" class="email-input" required />
+          <button class="btn" type="submit">Try Fauxdoo for free</button>
+        </form>
+      </section>
+
+    </main>
+    <footer>
+      <div class="container">
+        <p class="text-center">Copyright 2026</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<!-- Tool	Per user / month	Flat / month
+Taskana	$20	none
+Fastbooks	none	$76
+Buyify	none	$79
+Slick	$8	none
+Siteflow	none	$39/month
+Dealforce	$50/month	none -->
