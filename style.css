@@ -11,16 +11,23 @@
 
 .calculator-container {
     display: flex;
-    flex-direction: row;
-    align-items: stretch;
+    flex-direction: column;
     justify-content: center;
     gap: 20px;
     padding: 20px;
     padding: 30px;
 }
 
-.calculator-container-inner {
 
+@media (width >= 800px) {
+    .calculator-container {
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+}
+
+.calculator-container-inner {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -41,11 +48,15 @@
 
 .apps-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-
+  grid-template-columns: repeat(2, 1fr);
   border-radius: 10px;
+  gap: 30px;
+}
 
+@media (width >= 800px) {
+  .apps-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .app-option {
@@ -56,12 +67,13 @@
   position: absolute;
   width: 1px;
   height: 1px;
-  padding: 0;
   margin: -1px;
+  padding: 0;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
+  pointer-events: none;
 }
 
 .app-card {
@@ -69,12 +81,28 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
 }
 
-.app-card-check:checked + .app-card .app-card-logo,
-.app-card-check:focus-visible + .app-card .app-card-logo {
+.app-card,
+.app-card * {
+  cursor: pointer;
+}
+
+.app-option:hover .app-card-logo {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1), 0 0 0 2px #ADB5BD;
+}
+
+.app-option:has(.app-card-check:checked) .app-card-logo,
+.app-card:focus-visible .app-card-logo {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1), 0 0 0 2px var(--primary-color);
 }
 
@@ -98,36 +126,42 @@
   transition: box-shadow 0.2s ease;
 }
 
-.app-card-logo:hover {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1), 0 0 0 2px #ADB5BD;
+.app-card-logo img {
+    width: 100%;
+    height: auto;
 }
 
-@font-face {
-  font-family: "FontAwesome";
-  src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
+
+@media (width >= 800px) {
+
+    .app-card-logo {
+        padding: 30px;
+    }
+    .app-card-logo img {
+        width: 100%;
+        height: auto;
+    }
+
 }
 
-.app-card-check:checked + .app-card .app-card-logo::after {
-  content: "\f00c";
-  font-family: "FontAwesome";
+.app-option:has(.app-card-check:checked) .app-card-logo::after {
+  content: "";
   position: absolute;
   top: -0.75rem;
   left: auto;
   bottom: auto;
   right: -0.75rem;
-  color: var(--brand-light);
   background-color: var(--primary-color);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23fff' d='M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px 14px;
   border: 2px solid var(--primary-color);
   border-radius: 50%;
-  font-size: 14px;
   width: 28px;
   height: 28px;
-  line-height: 24px;
   display: block;
   box-sizing: border-box;
-  text-align: center;
 }
 
 .app-card img {
@@ -238,7 +272,7 @@ nav a {
 }
 
 .logo {
-  width: 100px;
+  width: 130px;
   height: auto;
 }
 

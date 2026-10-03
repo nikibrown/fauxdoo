@@ -39,15 +39,17 @@
                   class="app-card-check"
                   name="apps"
                   value="taskana"
+                  tabindex="-1"
+                  aria-hidden="true"
                 />
-                <label class="app-card" for="app-taskana">
+                <button type="button" class="app-card" aria-pressed="false">
                   <span class="app-card-logo">
                     <img src="img/taskana.svg" alt="app-icon" />
                   </span>
-                  <span class="app-category">Project Management</span>
+                  <span class="app-category">Projects</span>
                   <!-- <p class="app-name">Taskana</p>
                 <p class="app-price">$20 / month / user</p> -->
-                </label>
+                </button>
               </div>
 
               <div class="app-option">
@@ -57,15 +59,17 @@
                   class="app-card-check"
                   name="apps"
                   value="fastbooks"
+                  tabindex="-1"
+                  aria-hidden="true"
                 />
-                <label class="app-card" for="app-fastbooks">
+                <button type="button" class="app-card" aria-pressed="false">
                   <span class="app-card-logo">
                     <img src="img/fastbooks.svg" alt="app-icon" />
                   </span>
                   <span class="app-category">Accounting</span>
                   <!-- <p class="app-name">Fastbooks</p>
                 <p class="app-price">$76 / month</p> -->
-                </label>
+                </button>
               </div>
 
               <div class="app-option">
@@ -75,15 +79,17 @@
                   class="app-card-check"
                   name="apps"
                   value="buyify"
+                  tabindex="-1"
+                  aria-hidden="true"
                 />
-                <label class="app-card" for="app-buyify">
+                <button type="button" class="app-card" aria-pressed="false">
                   <span class="app-card-logo">
                     <img src="img/buyify.svg" alt="app-icon" />
                   </span>
                   <span class="app-category">eCommerce</span>
                   <!-- <p class="app-name">Buyify</p>
                 <p class="app-price">$79 / month</p> -->
-                </label>
+                </button>
               </div>
 
               <div class="app-option">
@@ -93,15 +99,17 @@
                   class="app-card-check"
                   name="apps"
                   value="slick"
+                  tabindex="-1"
+                  aria-hidden="true"
                 />
-                <label class="app-card" for="app-slick">
+                <button type="button" class="app-card" aria-pressed="false">
                   <span class="app-card-logo">
                     <img src="img/slick.svg" alt="app-icon" />
                   </span>
-                  <span class="app-category">Communication</span>
+                  <span class="app-category">Chat</span>
                   <!-- <p class="app-name">Slick</p>
                 <p class="app-price">$16 / month / user</p> -->
-                </label>
+                </button>
               </div>
 
               <div class="app-option">
@@ -111,15 +119,17 @@
                   class="app-card-check"
                   name="apps"
                   value="siteflo"
+                  tabindex="-1"
+                  aria-hidden="true"
                 />
-                <label class="app-card" for="app-siteflo">
+                <button type="button" class="app-card" aria-pressed="false">
                   <span class="app-card-logo">
                     <img src="img/siteflo.svg" alt="app-icon" />
                   </span>
                   <span class="app-category">Website</span>
                   <!-- <p class="app-name">Siteflow</p>
                 <p class="app-price">$39 / month</p> -->
-                </label>
+                </button>
               </div>
 
               <div class="app-option">
@@ -129,15 +139,17 @@
                   class="app-card-check"
                   name="apps"
                   value="dealforce"
+                  tabindex="-1"
+                  aria-hidden="true"
                 />
-                <label class="app-card" for="app-dealforce">
+                <button type="button" class="app-card" aria-pressed="false">
                   <span class="app-card-logo">
                     <img src="img/dealforce.svg" alt="app-icon" />
                   </span>
                   <span class="app-category">CRM</span>
                   <!-- <p class="app-name">Dealforce</p>
                 <p class="app-price">$50 / month</p> -->
-                </label>
+                </button>
               </div>
             </div>
 
@@ -187,7 +199,7 @@
               <h3>Total</h3>
               <p>$16,806.00 / year</p>
 
-              <h3>All Odoo Apps</h3>
+              <h3>All Fauxdoo Apps</h3>
               <p>for <span class="users-input-value">5</span> users / month</p>
 
               <h3>TOTAL</h3>
@@ -214,13 +226,25 @@
         <p class="text-center">Copyright 2026</p>
       </div>
     </footer>
+    <script>
+      document.querySelectorAll(".app-option").forEach((option) => {
+        const input = option.querySelector(".app-card-check");
+        const card = option.querySelector(".app-card");
+
+        card.addEventListener("click", () => {
+          input.checked = !input.checked;
+          card.setAttribute("aria-pressed", String(input.checked));
+        });
+      });
+    </script>
   </body>
 </html>
 
-<!-- Tool	Per user / month	Flat / month
-Taskana	$20	none
-Fastbooks	none	$76
-Buyify	none	$79
-Slick	$8	none
-Siteflow	none	$39/month
-Dealforce	$50/month	none -->
+<!-- Tool
+Taskana	$20 per user per month
+Fastbooks	80$ per month
+Buyify	80$ per month
+Siteflow	$40 per month
+Dealforce	$100 per month
+Slick	$16 per user per month
+ -->
