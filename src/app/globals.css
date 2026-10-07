@@ -45,6 +45,15 @@
   display: flex;
 }
 
+/* Fixed width on desktop so the totals text wraps instead of resizing the
+   layout as apps are selected. It can still shrink on narrower screens. */
+@media (width >= 800px) {
+  .calculator-totals-container {
+    flex: 0 1 22rem;
+    min-width: 0;
+  }
+}
+
 
 .apps-container {
   display: grid;
