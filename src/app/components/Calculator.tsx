@@ -19,6 +19,9 @@ const LOGOS: Record<string, string> = {
   crm: "img/dealforce.svg",
 };
 
+// Selected when the page loads. Ignored if that tool isn't in the catalog.
+const DEFAULT_SELECTED = ["tasks"]; // Taskana (Projects)
+
 type PricingState =
   | { status: "loading" }
   | { status: "error" }
@@ -37,13 +40,16 @@ function parseUsers(text: string): number | null {
 function listPrice(tool: Tool): string {
   const parts = [];
   if (tool.flatCents > 0) parts.push(`${formatPrice(tool.flatCents)} / month`);
-  if (tool.perUserCents > 0) parts.push(`${formatPrice(tool.perUserCents)} / user`);
+  if (tool.perUserCents > 0)
+    parts.push(`${formatPrice(tool.perUserCents)} / user`);
   return parts.join(" + ") || formatPrice(0);
 }
 
 export default function Calculator() {
-  const [pricingState, setPricingState] = useState<PricingState>({ status: "loading" });
-  const [selected, setSelected] = useState<string[]>([]);
+  const [pricingState, setPricingState] = useState<PricingState>({
+    status: "loading",
+  });
+  const [selected, setSelected] = useState<string[]>(DEFAULT_SELECTED);
   const [usersText, setUsersText] = useState("10");
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
@@ -67,16 +73,24 @@ export default function Calculator() {
     };
   }, []);
 
-  const tools = pricingState.status === "ready" ? pricingState.pricing.tools : [];
+  const tools =
+    pricingState.status === "ready" ? pricingState.pricing.tools : [];
   const users = parseUsers(usersText);
   const quote =
     pricingState.status === "ready" && users !== null
-      ? buildQuote(tools, selected, users, pricingState.pricing.suitePerUserCents)
+      ? buildQuote(
+          tools,
+          selected,
+          users,
+          pricingState.pricing.suitePerUserCents,
+        )
       : null;
   const selectedTools = tools.filter((tool) => selected.includes(tool.slug));
-  const hasSavings = quote !== null && selected.length > 0 && quote.annualSavingsCents > 0;
+  const hasSavings =
+    quote !== null && selectedTools.length > 0 && quote.annualSavingsCents > 0;
   const usersLabel = users ?? "–";
-  const money = (cents: number | undefined) => (cents === undefined ? "–" : formatUsd(cents));
+  const money = (cents: number | undefined) =>
+    cents === undefined ? "–" : formatUsd(cents);
 
   // A submit error describes the old inputs, so clear it when they change.
   function clearSubmitError() {
@@ -85,7 +99,9 @@ export default function Calculator() {
 
   function toggle(slug: string) {
     setSelected((current) =>
-      current.includes(slug) ? current.filter((s) => s !== slug) : [...current, slug]
+      current.includes(slug)
+        ? current.filter((s) => s !== slug)
+        : [...current, slug],
     );
     clearSubmitError();
   }
@@ -93,7 +109,10 @@ export default function Calculator() {
   async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     if (users === null) {
-      setSubmit({ status: "error", message: `Enter a whole number of users from ${MIN_USERS} to ${MAX_USERS}.` });
+      setSubmit({
+        status: "error",
+        message: `Enter a whole number of users from ${MIN_USERS} to ${MAX_USERS}.`,
+      });
       return;
     }
     setSubmit({ status: "submitting" });
@@ -102,16 +121,30 @@ export default function Calculator() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // Submitting is the consent: the notice under the button says so.
-        body: JSON.stringify({ email, users, toolSlugs: selected, consent: true, website }),
+        body: JSON.stringify({
+          email,
+          users,
+          toolSlugs: selectedTools.map((tool) => tool.slug),
+          consent: true,
+          website,
+        }),
       });
       if (res.status === 201) {
         setSubmit({ status: "success" });
         return;
       }
-      const data = (await res.json().catch(() => null)) as { error?: string } | null;
-      setSubmit({ status: "error", message: data?.error ?? "Something went wrong. Please try again." });
+      const data = (await res.json().catch(() => null)) as {
+        error?: string;
+      } | null;
+      setSubmit({
+        status: "error",
+        message: data?.error ?? "Something went wrong. Please try again.",
+      });
     } catch {
-      setSubmit({ status: "error", message: "Network error. Check your connection and try again." });
+      setSubmit({
+        status: "error",
+        message: "Network error. Check your connection and try again.",
+      });
     }
   }
 
@@ -120,10 +153,16 @@ export default function Calculator() {
       <div className="calculator-container">
         <div className="calculator-container-inner">
           <h3 id="apps-heading">1. Which apps do you use?</h3>
-          <div className="apps-container" role="group" aria-labelledby="apps-heading">
+          <div
+            className="apps-container"
+            role="group"
+            aria-labelledby="apps-heading"
+          >
             {pricingState.status === "loading" && <p>Loading apps…</p>}
             {pricingState.status === "error" && (
-              <p role="alert">Couldn&apos;t load pricing. Refresh the page to try again.</p>
+              <p role="alert">
+                Couldn&apos;t load pricing. Refresh the page to try again.
+              </p>
             )}
             {tools.map((tool) => {
               const checked = selected.includes(tool.slug);
@@ -148,7 +187,11 @@ export default function Calculator() {
                     onClick={() => toggle(tool.slug)}
                   >
                     <span className="app-card-logo">
-                      {logo ? <img src={withBasePath(logo)} alt={tool.name} /> : tool.name}
+                      {logo ? (
+                        <img src={withBasePath(logo)} alt={tool.name} />
+                      ) : (
+                        tool.name
+                      )}
                     </span>
                     <span className="app-category">{tool.category}</span>
                   </button>
@@ -187,51 +230,66 @@ export default function Calculator() {
         </div>
         <div className="calculator-totals-container">
           <div className="calculator-total-card">
-            <h3>Apps to replace</h3>
+          <div className="savings" aria-live="polite">
+            {hasSavings ? (
+              <>
+                <h2 className="your-savings">Your savings:</h2>
+                <h2 className="your-savings">
+                  <span className="highlight">
+                    {formatUsd(quote.annualSavingsCents)} / year
+                  </span>
+                </h2>
+                <p className="text-center">
+                  For a fully-integrated software.
+                </p>
+              </>
+            ) : (
+              <>
+                <h2 className="your-savings">Your savings</h2>
+                <p>
+                  {selectedTools.length === 0
+                    ? "Select the apps you use to see what you could save."
+                    : "Fauxdoo won't lower your bill for this setup yet. Add the other apps you pay for to compare."}
+                </p>
+              </>
+            )}
+          </div>
 
-            <p>for <span className="users-input-value">{usersLabel}</span> users / month</p>
+            <div className="third-party-apps">
+              <h3>Apps to replace</h3>
 
-            <ul>
-              {selectedTools.length === 0 ? (
-                <li>No apps selected yet.</li>
-              ) : (
-                selectedTools.map((tool) => (
-                  <li key={tool.slug}>
-                    <span className="app-name">{tool.name}</span>{" "}
-                    <span className="app-price">{listPrice(tool)}</span>
-                  </li>
-                ))
-              )}
-            </ul>
+              <p>
+                for <span className="users-input-value">{usersLabel}</span>{" "}
+                users / month
+              </p>
 
-            <h3>Total</h3>
-            <p>{money(quote ? quote.currentMonthly * 12 : undefined)} / year</p>
+              <ul className="calculator-total-apps-list">
+                {selectedTools.length === 0 ? (
+                  <li>No apps selected yet.</li>
+                ) : (
+                  selectedTools.map((tool) => (
+                    <li key={tool.slug}>
+                      <span className="app-name">{tool.name}</span>{" "}
+                      <span className="app-price">{listPrice(tool)}</span>
+                    </li>
+                  ))
+                )}
+              </ul>
 
-            <h3>Fauxdoo Suite</h3>
-            <p>for <span className="users-input-value">{usersLabel}</span> users / month</p>
+              <img src={withBasePath("img/separator.svg")} alt="" className="separator" />
 
-            <h3>TOTAL</h3>
-            <p>{money(quote ? quote.suiteMonthly * 12 : undefined)} / year</p>
+              <h3 className="total"><span>Total</span>  <span>{money(quote ? quote.currentMonthly * 12 : undefined)} / year</span></h3>
 
-            <div aria-live="polite">
-              {hasSavings ? (
-                <>
-                  <h3>
-                    Your savings:
-                  </h3>
-                  <h3><span className="highlight">{formatUsd(quote.annualSavingsCents)} / year</span></h3>
-                  <p>For a fully-integrated software.</p>
-                </>
-              ) : (
-                <>
-                  <h3>Your savings</h3>
-                  <p>
-                    {selected.length === 0
-                      ? "Select the apps you use to see what you could save."
-                      : "Fauxdoo won't lower your bill for this setup yet. Add the other apps you pay for to compare."}
-                  </p>
-                </>
-              )}
+            </div>
+
+            <div className="fauxdoo-apps">
+              <h3>All Fauxdoo Apps</h3>
+              <p>
+                for <span className="users-input-value">{usersLabel}</span>{" "}
+                users / month
+              </p>
+              <img src={withBasePath("img/separator.svg")} alt="" className="separator" />
+                <h3 className="total"><span>Total</span> <span>{money(quote ? quote.suiteMonthly * 12 : undefined)} / yea</span></h3>
             </div>
           </div>
         </div>
@@ -244,7 +302,12 @@ export default function Calculator() {
         </div>
       ) : (
         <form className="sales-container" onSubmit={handleSubmit}>
-          <h3>Get started with a demo today</h3>
+          {/* quote is null while prices load or the user count is invalid. */}
+          <h3>
+            {hasSavings
+              ? `Claim your ${formatUsd(quote.annualSavingsCents)} savings and start a free demo today`
+              : "Get started with a demo today"}
+          </h3>
           <label htmlFor="email-input" className="visually-hidden">
             Email
           </label>
@@ -260,11 +323,18 @@ export default function Calculator() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <button className="btn" type="submit" disabled={submit.status === "submitting"}>
-            {submit.status === "submitting" ? "Sending…" : "Try Fauxdoo for free"}
+          <button
+            className="btn"
+            type="submit"
+            disabled={submit.status === "submitting"}
+          >
+            {submit.status === "submitting"
+              ? "Sending…"
+              : "Try Fauxdoo for free"}
           </button>
           <p className="consent-label">
-            By submitting, you agree to get emails about your savings and Fauxdoo. Unsubscribe anytime.
+            By submitting, you agree to get emails about your savings and
+            Fauxdoo. Unsubscribe anytime.
           </p>
           {/* Honeypot: hidden from people; bots that fill it are ignored by the server. */}
           <div className="form-honeypot" aria-hidden="true">

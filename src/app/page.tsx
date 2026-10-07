@@ -18,9 +18,9 @@ export default function Home() {
         </div>
       </header>
       <main>
-        <section className="container">
+        <section className="container section-intro">
           <h1 className="text-center">
-            <span className="highlight">Cut costs</span> with fauxdoo
+            Save <span className="underline">Money</span> with Fauxdoo
           </h1>
           <h2 className="text-center">
             Cost savings based on average price per user for each app.
@@ -32,7 +32,7 @@ export default function Home() {
       <footer>
         <div className="container">
 
-          <p className="text-center">Copyright 2026</p>
+          <p className="text-center">Copyright Fauxdoo 2026</p>
         </div>
       </footer>
     </>

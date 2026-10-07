@@ -20,7 +20,7 @@ test("rejects bad input", () => {
     "bad email": { ...VALID, email: "not-an-email" },
     "too-long email": { ...VALID, email: `${"a".repeat(250)}@example.com` },
     "zero users": { ...VALID, users: 0 },
-    "too many users": { ...VALID, users: 501 },
+    "too many users": { ...VALID, users: 1000 },
     "fractional users": { ...VALID, users: 2.5 },
     "string users": { ...VALID, users: "5" },
     "empty tools": { ...VALID, toolSlugs: [] },
@@ -33,9 +33,9 @@ test("rejects bad input", () => {
   }
 });
 
-test("accepts users at the 1 and 500 boundaries", () => {
+test("accepts users at the 1 and 999 boundaries", () => {
   assert.equal(validateLead({ ...VALID, users: 1 }, SLUGS).ok, true);
-  assert.equal(validateLead({ ...VALID, users: 500 }, SLUGS).ok, true);
+  assert.equal(validateLead({ ...VALID, users: 999 }, SLUGS).ok, true);
 });
 
 test("detects a filled honeypot", () => {

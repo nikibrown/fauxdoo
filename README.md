@@ -122,7 +122,7 @@ curl -X POST https://fauxdoo-software.webflow.io/savings-calculator/api/leads \
 # 201 {"ok":true,"annualSavingsCents":...}
 ```
 
-Validation: valid email (up to 254 characters), `users` a whole number from 1 to 500, one or more tool slugs that all exist, `consent` must be `true`. Errors return `400 {"error":"..."}`. `website` is a hidden spam trap: if it's filled in, the response is `201` but nothing is saved.
+Validation: valid email (up to 254 characters), `users` a whole number from 1 to 999, one or more tool slugs that all exist, `consent` must be `true`. Errors return `400 {"error":"..."}`. `website` is a hidden spam trap: if it's filled in, the response is `201` but nothing is saved.
 
 ### Admin (token required)
 

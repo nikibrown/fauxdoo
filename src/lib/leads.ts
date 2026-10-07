@@ -4,7 +4,7 @@
  */
 
 export const MIN_USERS = 1;
-export const MAX_USERS = 500;
+export const MAX_USERS = 999;
 const MAX_EMAIL_LENGTH = 254;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
