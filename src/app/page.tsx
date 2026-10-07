@@ -7,13 +7,28 @@ export default function Home() {
     <>
       <header>
         <div className="container">
-          <nav>
-            <img src={withBasePath("img/fauxdoo-logo.svg")} alt="Fauxdoo" className="logo" />
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
+          <nav role="navigation" className="nav-menu-wrapper w-nav-menu">
+            <div className="nav-menu-flex">
+              <a href="#" className="brand w-nav-brand">
+                <img src={withBasePath("img/fauxdoo-logo.svg")} className="logo" alt="Fauxdoo" width="150" />
+              </a>
+
+              <ul role="list" className="nav-menu w-list-unstyled">
+                <li>
+                  <a href="https://fauxdoo-software.webflow.io/#process" className="nav-link">Process</a>
+                </li>
+                <li>
+                  <a href="https://fauxdoo-software.webflow.io/#about" className="nav-link">About</a>
+                </li>
+                <li>
+                  <a href="https://fauxdoo-software.webflow.io/#pricing" className="nav-link">Pricing</a>
+                </li>
+              </ul>
+
+              <div className="navbar-button-wrapper">
+                <a href="/savings-calculator" className="button cc-small w-button">Savings Calculator</a>
+              </div>
+            </div>
           </nav>
         </div>
       </header>
