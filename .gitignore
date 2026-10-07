@@ -45,10 +45,14 @@ next-env.d.ts
 .wrangler
 .open-next
 
-# Claude / AI planning files (kept local)
+
 CLAUDE.md
 .claude/
 docs/
+
+# Slides
+slides/
+
 
 # Lead exports downloaded from /api/admin/leads (contain email addresses)
 *.csv
