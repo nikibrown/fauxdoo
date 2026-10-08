@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <g transform="translate(3 8)">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M25.65 0L17.4654 16H9.77778L13.203 9.36892H13.0493C10.2235 13.0372 6.00738 15.452 0 16V9.46068C0 9.46068 3.84306 9.23369 6.10229 6.85844H0V0.000126383H6.85832V5.64099L7.01225 5.64036L9.8148 0.000126383H15.0016V5.60523L15.1555 5.60497L18.0632 0H25.65Z" fill="#146EF5"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- Fauxdoo favicon: the "f" from public/img/fauxdoo-logo.svg on the brand purple. -->
+  <rect width="256" height="256" rx="56" fill="#714b67"/>
+  <path fill="#fff" transform="translate(91.6 43.6) scale(0.8)" d="M75.5,0h-14C27.59,0,0,27.59,0,61.5v134c0,8.56,6.94,15.5,15.5,15.5s15.5-6.94,15.5-15.5v-103.5h24.5c8.56,0,15.5-6.94,15.5-15.5s-6.94-15.5-15.5-15.5h-24.49c.27-16.59,13.84-30,30.49-30h14c8.56,0,15.5-6.94,15.5-15.5S84.06,0,75.5,0Z"/>
 </svg>

@@ -3,7 +3,13 @@ import assert from "node:assert/strict";
 import { isHoneypotFilled, validateLead } from "./leads.ts";
 
 const SLUGS = new Set(["tasks", "books", "shop", "chat", "cms", "crm"]);
-const VALID = { email: "Test@Example.com ", users: 5, toolSlugs: ["tasks", "chat"], consent: true, website: "" };
+const VALID = {
+  email: "Test@Example.com ",
+  users: 5,
+  toolSlugs: ["tasks", "chat"],
+  consent: true,
+  website: "",
+};
 
 test("accepts a valid lead and normalizes email and slugs", () => {
   const result = validateLead({ ...VALID, toolSlugs: ["chat", "tasks", "chat"] }, SLUGS);

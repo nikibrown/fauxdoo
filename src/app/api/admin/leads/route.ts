@@ -42,7 +42,7 @@ export async function GET(request: Request) {
            WHERE consent = 1 OR ?1 = 0
          )
          WHERE rn = 1
-         ORDER BY created_at DESC, id DESC`
+         ORDER BY created_at DESC, id DESC`,
       )
         .bind(consentOnly ? 1 : 0)
         .all<LeadRow>(),
@@ -74,7 +74,7 @@ export async function GET(request: Request) {
         lead.tools.join("; "),
         lead.annualSavingsCents / 100,
         lead.createdAt,
-      ])
+      ]),
     );
     const date = new Date().toISOString().slice(0, 10);
     return new Response(csv, {

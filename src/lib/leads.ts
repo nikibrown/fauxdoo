@@ -14,9 +14,7 @@ export interface LeadInput {
   toolSlugs: string[];
 }
 
-export type LeadValidation =
-  | { ok: true; lead: LeadInput }
-  | { ok: false; error: string };
+export type LeadValidation = { ok: true; lead: LeadInput } | { ok: false; error: string };
 
 /** True when the hidden `website` field was filled in (likely a bot). */
 export function isHoneypotFilled(body: unknown): boolean {
@@ -44,7 +42,12 @@ export function validateLead(body: unknown, activeSlugs: Set<string>): LeadValid
     return { ok: false, error: "Enter a valid email address" };
   }
 
-  if (typeof users !== "number" || !Number.isInteger(users) || users < MIN_USERS || users > MAX_USERS) {
+  if (
+    typeof users !== "number" ||
+    !Number.isInteger(users) ||
+    users < MIN_USERS ||
+    users > MAX_USERS
+  ) {
     return { ok: false, error: `Users must be a whole number from ${MIN_USERS} to ${MAX_USERS}` };
   }
 

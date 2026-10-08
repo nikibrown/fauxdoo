@@ -58,17 +58,22 @@ export async function PUT(request: Request) {
       statements.push(
         env.DB.prepare(
           `INSERT INTO settings (key, value) VALUES ('suite_per_user_cents', ?)
-           ON CONFLICT(key) DO UPDATE SET value = excluded.value`
-        ).bind(String(suitePerUserCents))
+           ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
+        ).bind(String(suitePerUserCents)),
       );
     }
     for (const { slug, ...fields } of tools) {
-      const entries = Object.entries(fields) as [keyof typeof TOOL_COLUMNS, string | number | boolean][];
+      const entries = Object.entries(fields) as [
+        keyof typeof TOOL_COLUMNS,
+        string | number | boolean,
+      ][];
       if (entries.length === 0) continue;
       const assignments = entries.map(([field]) => `${TOOL_COLUMNS[field]} = ?`).join(", ");
-      const values = entries.map(([, value]) => (typeof value === "boolean" ? (value ? 1 : 0) : value));
+      const values = entries.map(([, value]) =>
+        typeof value === "boolean" ? (value ? 1 : 0) : value,
+      );
       statements.push(
-        env.DB.prepare(`UPDATE tools SET ${assignments} WHERE slug = ?`).bind(...values, slug)
+        env.DB.prepare(`UPDATE tools SET ${assignments} WHERE slug = ?`).bind(...values, slug),
       );
     }
 

@@ -13,7 +13,7 @@ test("accepts a valid update and trims names", () => {
         { slug: "crm", active: false, sortOrder: 0, flatCents: 0 },
       ],
     },
-    SLUGS
+    SLUGS,
   );
   assert.deepEqual(result, {
     ok: true,
@@ -32,7 +32,10 @@ test("accepts a suite-only or tools-only update", () => {
     ok: true,
     update: { suitePerUserCents: 0, tools: [] },
   });
-  assert.equal(validatePricingUpdate({ tools: [{ slug: "tasks", flatCents: 100 }] }, SLUGS).ok, true);
+  assert.equal(
+    validatePricingUpdate({ tools: [{ slug: "tasks", flatCents: 100 }] }, SLUGS).ok,
+    true,
+  );
 });
 
 test("rejects bad input", () => {
@@ -44,7 +47,12 @@ test("rejects bad input", () => {
     "string suite": { suitePerUserCents: "1200" },
     "tools not array": { tools: { slug: "tasks" } },
     "unknown slug": { tools: [{ slug: "nope", flatCents: 1 }] },
-    "duplicate slug": { tools: [{ slug: "tasks", flatCents: 1 }, { slug: "tasks", flatCents: 2 }] },
+    "duplicate slug": {
+      tools: [
+        { slug: "tasks", flatCents: 1 },
+        { slug: "tasks", flatCents: 2 },
+      ],
+    },
     "negative price": { tools: [{ slug: "tasks", perUserCents: -100 }] },
     "huge price": { tools: [{ slug: "tasks", flatCents: 100_000_001 }] },
     "empty name": { tools: [{ slug: "tasks", name: "  " }] },

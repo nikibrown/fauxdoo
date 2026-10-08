@@ -12,7 +12,7 @@ export function bearerToken(header: string | null): string | null {
 export async function tokensMatch(a: string, b: string): Promise<boolean> {
   const encoder = new TextEncoder();
   const [hashA, hashB] = await Promise.all(
-    [a, b].map((value) => crypto.subtle.digest("SHA-256", encoder.encode(value)))
+    [a, b].map((value) => crypto.subtle.digest("SHA-256", encoder.encode(value))),
   );
   const bytesA = new Uint8Array(hashA);
   const bytesB = new Uint8Array(hashB);
@@ -27,7 +27,7 @@ export async function tokensMatch(a: string, b: string): Promise<boolean> {
  */
 export async function checkAdminAuth(
   request: Request,
-  adminToken: string | undefined
+  adminToken: string | undefined,
 ): Promise<Response | null> {
   if (!adminToken) {
     return Response.json({ error: "Admin access is not configured" }, { status: 503 });
@@ -36,7 +36,7 @@ export async function checkAdminAuth(
   if (!token || !(await tokensMatch(token, adminToken))) {
     return Response.json(
       { error: "Unauthorized" },
-      { status: 401, headers: { "WWW-Authenticate": "Bearer" } }
+      { status: 401, headers: { "WWW-Authenticate": "Bearer" } },
     );
   }
   return null;

@@ -10,7 +10,9 @@
     "lint": "eslint",
     "db:setup": "wrangler d1 migrations apply DB --local",
     "cf:types": "wrangler types",
-    "test": "node --test \"src/**/*.test.ts\""
+    "test": "node --test \"src/**/*.test.ts\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.19.0",
@@ -25,6 +27,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
+    "prettier": "3.9.9",
     "typescript": "^5",
     "wrangler": "^4.14.0"
   }

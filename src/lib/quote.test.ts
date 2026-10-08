@@ -4,12 +4,54 @@ import { buildQuote, type Tool } from "./quote.ts";
 
 // Mirrors the seed migration (drizzle/0002_seed.sql).
 const TOOLS: Tool[] = [
-  { slug: "tasks", name: "Taskana", replaces: "Asana/Jira/Monday", category: "Projects", perUserCents: 2000, flatCents: 0 },
-  { slug: "books", name: "Fastbooks", replaces: "QuickBooks", category: "Accounting", perUserCents: 0, flatCents: 8000 },
-  { slug: "shop", name: "Buyify", replaces: "Shopify", category: "eCommerce", perUserCents: 0, flatCents: 8000 },
-  { slug: "chat", name: "Slick", replaces: "Slack", category: "Chat", perUserCents: 1600, flatCents: 0 },
-  { slug: "cms", name: "Siteflo", replaces: "Webflow", category: "Website", perUserCents: 0, flatCents: 4000 },
-  { slug: "crm", name: "Dealforce", replaces: "Salesforce", category: "CRM", perUserCents: 0, flatCents: 10000 },
+  {
+    slug: "tasks",
+    name: "Taskana",
+    replaces: "Asana/Jira/Monday",
+    category: "Projects",
+    perUserCents: 2000,
+    flatCents: 0,
+  },
+  {
+    slug: "books",
+    name: "Fastbooks",
+    replaces: "QuickBooks",
+    category: "Accounting",
+    perUserCents: 0,
+    flatCents: 8000,
+  },
+  {
+    slug: "shop",
+    name: "Buyify",
+    replaces: "Shopify",
+    category: "eCommerce",
+    perUserCents: 0,
+    flatCents: 8000,
+  },
+  {
+    slug: "chat",
+    name: "Slick",
+    replaces: "Slack",
+    category: "Chat",
+    perUserCents: 1600,
+    flatCents: 0,
+  },
+  {
+    slug: "cms",
+    name: "Siteflo",
+    replaces: "Webflow",
+    category: "Website",
+    perUserCents: 0,
+    flatCents: 4000,
+  },
+  {
+    slug: "crm",
+    name: "Dealforce",
+    replaces: "Salesforce",
+    category: "CRM",
+    perUserCents: 0,
+    flatCents: 10000,
+  },
 ];
 const SUITE = 1200;
 

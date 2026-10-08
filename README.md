@@ -34,14 +34,21 @@ drizzle/                      SQL migrations (folder name comes from the templat
   0001_init.sql               tables: tools, settings, leads
   0002_seed.sql               the six tools and the suite price
 src/app/
-  page.tsx                    page shell (header, headings, footer)
-  components/Calculator.tsx   the interactive calculator (client component)
+  page.tsx                    the page: Header, Hero, Calculator, Footer
+  icon.svg                    favicon (the "f" from the Fauxdoo logo)
+  components/
+    Header.tsx, Hero.tsx, Footer.tsx
+    Calculator.tsx            calculator state and math (client component)
+    AppPicker.tsx             the app cards
+    UsersInput.tsx            the number-of-users field
+    TotalsCard.tsx            savings and cost totals
+    CostSummary.tsx           one cost block in the totals card
+    LeadForm.tsx              the email form
   globals.css                 all styles
   api/pricing/route.ts        GET  public price list
   api/leads/route.ts          POST save a lead
   api/admin/pricing/route.ts  GET/PUT prices (token required)
   api/admin/leads/route.ts    GET  leads as JSON or CSV (token required)
-  api/binding-status/route.ts GET  health check for the storage bindings
 src/lib/
   quote.ts                    buildQuote: the savings calculation
   pricing.ts                  reads prices from the database
@@ -51,7 +58,7 @@ src/lib/
   csv.ts                      CSV writer (spreadsheet-formula safe)
   paths.ts                    withBasePath: adds the mount path to URLs
   money.ts                    cents → "$1,234.00"
-wrangler.json                 storage bindings (DB, plus template KV/R2)
+wrangler.json                 the SQLite database binding (DB)
 ```
 
 ## Run it locally
@@ -107,8 +114,14 @@ All paths are relative to the app's mount path (e.g. `/savings-calculator/api/pr
 {
   "suitePerUserCents": 1200,
   "tools": [
-    { "slug": "tasks", "name": "Taskana", "replaces": "Asana/Jira/Monday",
-      "category": "Projects", "perUserCents": 2000, "flatCents": 0 }
+    {
+      "slug": "tasks",
+      "name": "Taskana",
+      "replaces": "Asana/Jira/Monday",
+      "category": "Projects",
+      "perUserCents": 2000,
+      "flatCents": 0
+    }
   ]
 }
 ```
@@ -128,11 +141,11 @@ Validation: valid email (up to 254 characters), `users` a whole number from 1 to
 
 Send `Authorization: Bearer <ADMIN_TOKEN>`. A missing or wrong token returns `401`; if no token is configured on the server, admin routes return `503` instead of opening up.
 
-| Route | What it does |
-|---|---|
-| `GET /api/admin/pricing` | All tools, including inactive ones, with `active` and `sortOrder` |
-| `PUT /api/admin/pricing` | Update `suitePerUserCents` and/or tools (`name`, `perUserCents`, `flatCents`, `active`, `sortOrder`). All changes apply together or not at all. |
-| `GET /api/admin/leads` | One row per email (latest submission), newest first. JSON by default; `?format=csv` downloads a CSV; `&consentOnly=1` keeps only leads who agreed to emails. |
+| Route                    | What it does                                                                                                                                                 |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `GET /api/admin/pricing` | All tools, including inactive ones, with `active` and `sortOrder`                                                                                            |
+| `PUT /api/admin/pricing` | Update `suitePerUserCents` and/or tools (`name`, `perUserCents`, `flatCents`, `active`, `sortOrder`). All changes apply together or not at all.              |
+| `GET /api/admin/leads`   | One row per email (latest submission), newest first. JSON by default; `?format=csv` downloads a CSV; `&consentOnly=1` keeps only leads who agreed to emails. |
 
 Download the leads CSV without putting the token in your shell history:
 
@@ -164,4 +177,3 @@ Webflow Cloud sets Next.js's `basePath` from the mount path, so `<Link>`, `next/
 - Spam protection is a honeypot field only (no rate limiting or CAPTCHA).
 - Submitting the form counts as consent to marketing emails (a notice under the button says so); there is no separate opt-in checkbox.
 - No admin screen; edit prices in the Storage tab or through the admin API.
-- The template's KV (`SESSIONS`, `FLAGS`) and R2 (`MEDIA`) bindings are declared but unused.

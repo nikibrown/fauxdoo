@@ -33,7 +33,7 @@ export function buildQuote(
   tools: Tool[],
   slugs: string[],
   users: number,
-  suitePerUserCents: number
+  suitePerUserCents: number,
 ): Quote {
   const selected = new Set(slugs);
 

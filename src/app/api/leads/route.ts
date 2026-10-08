@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       `INSERT INTO leads
          (email, users, tool_slugs, current_monthly_cents, suite_monthly_cents,
           annual_savings_cents, consent, created_at)
-       VALUES (?, ?, ?, ?, ?, ?, 1, ?)`
+       VALUES (?, ?, ?, ?, ?, ?, 1, ?)`,
     )
       .bind(
         email,
@@ -51,13 +51,13 @@ export async function POST(request: Request) {
         quote.currentMonthly,
         quote.suiteMonthly,
         quote.annualSavingsCents,
-        new Date().toISOString()
+        new Date().toISOString(),
       )
       .run();
 
     return NextResponse.json(
       { ok: true, annualSavingsCents: quote.annualSavingsCents },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (e) {
     console.error("POST /api/leads failed:", e instanceof Error ? e.message : "Unknown error");
